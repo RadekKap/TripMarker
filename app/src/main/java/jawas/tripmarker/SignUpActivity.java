@@ -3,6 +3,7 @@ package jawas.tripmarker;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -31,12 +32,12 @@ public class SignUpActivity extends AppCompatActivity {
             new Firebase.ValueResultHandler<Map<String, Object>>() {
                 @Override
                 public void onSuccess(Map<String, Object> stringObjectMap) {
-
+                    finish();
                 }
 
                 @Override
                 public void onError(FirebaseError firebaseError) {
-
+                    Log.i("Firebase ERROR", firebaseError.toString());
                 }
             });
     }

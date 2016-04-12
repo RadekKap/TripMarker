@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -29,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(goToSignUp);
     }
 
-    public void signIn(){
+    public void signIn(View view){
         EditText email = (EditText)findViewById(R.id.email);
         EditText password = (EditText)findViewById(R.id.password);
 
@@ -39,12 +40,13 @@ public class LoginActivity extends AppCompatActivity {
                 password.getText().toString(), new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
-
+                Intent goToMap = new Intent(LoginActivity.this, MapsActivity.class);
+                LoginActivity.this.startActivity( goToMap );
             }
 
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
-
+                Log.i("Firebase ERROR", firebaseError.toString());
             }
         });
     }
