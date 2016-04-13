@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
@@ -30,24 +31,47 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(goToSignUp);
     }
 
-    public void signIn(View view){
-        EditText email = (EditText)findViewById(R.id.email);
-        EditText password = (EditText)findViewById(R.id.password);
+    public void signIn(View view) {
+        EditText email = (EditText) findViewById(R.id.email);
+        EditText password = (EditText) findViewById(R.id.password);
 
-        Firebase database = new Firebase("https://tripmarker.firebaseio.com/");
+        if(password.getText().toString().isEmpty()== false || email.getText().toString().isEmpty()== false ) {
+           Firebase database = new Firebase("https://tripmarker.firebaseio.com/");
 
-        database.authWithPassword(email.getText().toString(),
+             database.authWithPassword(email.getText().toString(),
                 password.getText().toString(), new Firebase.AuthResultHandler() {
-            @Override
-            public void onAuthenticated(AuthData authData) {
-                Intent goToMap = new Intent(LoginActivity.this, MapsActivity.class);
-                LoginActivity.this.startActivity( goToMap );
+                    @Override
+                    public void onAuthenticated(AuthData authData) {
+                        Intent goToMap = new Intent(LoginActivity.this, MapsActivity.class);
+                        LoginActivity.this.startActivity(goToMap);
+
+                    }
+
+                    @Override
+                    public void onAuthenticationError(FirebaseError firebaseError) {
+                        String error = firebaseError.toString();
+                       // Log.i("Firebase ERROR", error);
+
+                        if(error.length()!=164)
+                            Toast.makeText(getApplicationContext(), error.substring(15), Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(getApplicationContext(), "You don"+ "\'" + "t have access to the Internet", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        }
+        int i=0;
+            if(password.getText().toString().isEmpty() == true && email.getText().toString().isEmpty() == true)
+            {
+                Toast.makeText(getApplicationContext(), "You didn" + "\'" + "t type Email and Password", Toast.LENGTH_LONG).show();
+                i=1;
             }
 
-            @Override
-            public void onAuthenticationError(FirebaseError firebaseError) {
-                Log.i("Firebase ERROR", firebaseError.toString());
-            }
-        });
+            if(email.getText().toString().isEmpty()== true && i==0)
+                Toast.makeText(getApplicationContext(), "You didn" + "\'" + "t type Email", Toast.LENGTH_LONG).show();
+
+            if(password.getText().toString().isEmpty()== true && i==0)
+                Toast.makeText(getApplicationContext(), "You didn" + "\'" + "t type Password", Toast.LENGTH_LONG).show();
+
     }
 }
