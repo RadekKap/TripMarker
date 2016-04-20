@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -35,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText email = (EditText) findViewById(R.id.email);
         EditText password = (EditText) findViewById(R.id.password);
 
-        if(password.getText().toString().isEmpty()== false || email.getText().toString().isEmpty()== false ) {
+        if(!password.getText().toString().isEmpty() || !email.getText().toString().isEmpty() ) {
            Firebase database = new Firebase("https://tripmarker.firebaseio.com/");
 
              database.authWithPassword(email.getText().toString(),
@@ -61,16 +60,16 @@ public class LoginActivity extends AppCompatActivity {
 
         }
         int i=0;
-            if(password.getText().toString().isEmpty() == true && email.getText().toString().isEmpty() == true)
+            if(password.getText().toString().isEmpty() && email.getText().toString().isEmpty())
             {
                 Toast.makeText(getApplicationContext(), "You didn" + "\'" + "t type Email and Password", Toast.LENGTH_LONG).show();
                 i=1;
             }
 
-            if(email.getText().toString().isEmpty()== true && i==0)
+            if(email.getText().toString().isEmpty() && i==0)
                 Toast.makeText(getApplicationContext(), "You didn" + "\'" + "t type Email", Toast.LENGTH_LONG).show();
 
-            if(password.getText().toString().isEmpty()== true && i==0)
+            if(password.getText().toString().isEmpty() && i==0)
                 Toast.makeText(getApplicationContext(), "You didn" + "\'" + "t type Password", Toast.LENGTH_LONG).show();
 
     }

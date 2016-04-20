@@ -8,4 +8,5 @@
     <string name="title_password">Password</string>
     <string name="title_retype_password">Re-type password</string>
     <string name="title_name">Name</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 </resources>

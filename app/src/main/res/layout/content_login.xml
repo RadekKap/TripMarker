@@ -13,28 +13,23 @@
     tools:context="jawas.tripmarker.LoginActivity">
 
     <EditText android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/input"
         android:inputType="textPassword"
-        android:ems="10"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="151dp"
+        android:layout_marginTop="130dp"
         android:hint="@string/title_password"/>
 
     <EditText android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/input"
         android:inputType="textEmailAddress"
-        android:ems="10"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="40dp"
         android:hint="@string/title_email"/>
 
     <Button android:id="@+id/sign_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/button"
         android:text="@string/sign_in"
         android:layout_marginTop="68dp"
         android:layout_below="@+id/password"
@@ -45,15 +40,14 @@
         android:onClick="signIn"/>
 
     <Button android:id="@+id/sign_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/button"
         android:text="@string/sign_up"
         android:layout_below="@+id/sign_in"
+        android:layout_marginTop="20dp"
         android:layout_alignRight="@+id/sign_in"
         android:layout_alignLeft="@+id/sign_in"
         android:layout_alignStart="@+id/sign_in"
         android:layout_alignEnd="@+id/sign_in"
-        android:layout_centerHorizontal="true"
         android:onClick="signUp"/>
 
 </RelativeLayout>

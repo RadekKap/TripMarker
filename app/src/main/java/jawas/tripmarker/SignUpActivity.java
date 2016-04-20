@@ -3,7 +3,6 @@ package jawas.tripmarker;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,10 +28,10 @@ public class SignUpActivity extends AppCompatActivity {
         EditText retypepass = (EditText) findViewById(R.id.retype_password);
         EditText name = (EditText) findViewById(R.id.name);
 
-        if(password.getText().toString().equals(retypepass.getText().toString())==true
-                && email.getText().toString().isEmpty()== false
-                && name.getText().toString().isEmpty()== false
-                && password.getText().toString().isEmpty()== false
+        if(password.getText().toString().equals(retypepass.getText().toString())
+                && !email.getText().toString().isEmpty()
+                && !name.getText().toString().isEmpty()
+                && !password.getText().toString().isEmpty()
                 ) {
             Firebase firebase = new Firebase("https://tripmarker.firebaseio.com/");
 
@@ -55,24 +54,20 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     });
 
-        }   if(password.getText().toString().equals(retypepass.getText().toString())==false)
+        }   if(!password.getText().toString().equals(retypepass.getText().toString()))
                 Toast.makeText(getApplicationContext(), "Typed passwords are different", Toast.LENGTH_LONG).show();
             int i=0;
-            if(email.getText().toString().isEmpty()== true && name.getText().toString().isEmpty()== true)
+            if(email.getText().toString().isEmpty() && name.getText().toString().isEmpty())
             {  Toast.makeText(getApplicationContext(), "You didn" + "\'" + "t type Email and Name", Toast.LENGTH_LONG).show();
                 i=1;}
 
-            if(email.getText().toString().isEmpty()== true && i==0)
+            if(email.getText().toString().isEmpty() && i==0)
                 Toast.makeText(getApplicationContext(), "You didn" + "\'" + "t type Email", Toast.LENGTH_LONG).show();
 
-            if(name.getText().toString().isEmpty()== true && i==0)
+            if(name.getText().toString().isEmpty() && i==0)
                 Toast.makeText(getApplicationContext(), "You didn" + "\'" + "t type Name", Toast.LENGTH_LONG).show();
 
-            if(password.getText().toString().isEmpty() == true && retypepass.getText().toString().isEmpty() == true)
+            if(password.getText().toString().isEmpty() && retypepass.getText().toString().isEmpty())
                 Toast.makeText(getApplicationContext(), "You didn" + "\'" + "t type Passwords", Toast.LENGTH_LONG).show();
-
-
-
-
     }
 }
