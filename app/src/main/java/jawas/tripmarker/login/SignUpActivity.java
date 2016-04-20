@@ -1,4 +1,4 @@
-package jawas.tripmarker;
+package jawas.tripmarker.login;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import java.util.Map;
+
+import jawas.tripmarker.R;
 
 public class SignUpActivity extends AppCompatActivity {
 

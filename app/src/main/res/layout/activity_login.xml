@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="jawas.tripmarker.LoginActivity"
+    tools:context="jawas.tripmarker.login.LoginActivity"
     style="@style/background">
 
     <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"

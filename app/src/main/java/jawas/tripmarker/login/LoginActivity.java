@@ -1,4 +1,4 @@
-package jawas.tripmarker;
+package jawas.tripmarker.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import android.widget.Toast;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+
+import jawas.tripmarker.profile.ProfileActivity;
+import jawas.tripmarker.R;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -41,15 +44,13 @@ public class LoginActivity extends AppCompatActivity {
                 password.getText().toString(), new Firebase.AuthResultHandler() {
                     @Override
                     public void onAuthenticated(AuthData authData) {
-                        Intent goToMap = new Intent(LoginActivity.this, MapsActivity.class);
+                        Intent goToMap = new Intent(LoginActivity.this, ProfileActivity.class);
                         LoginActivity.this.startActivity(goToMap);
-
                     }
 
                     @Override
                     public void onAuthenticationError(FirebaseError firebaseError) {
                         String error = firebaseError.toString();
-                       // Log.i("Firebase ERROR", error);
 
                         if(error.length()!=164)
                             Toast.makeText(getApplicationContext(), error.substring(15), Toast.LENGTH_LONG).show();
@@ -57,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "You don"+ "\'" + "t have access to the Internet", Toast.LENGTH_LONG).show();
                     }
                 });
-
         }
         int i=0;
             if(password.getText().toString().isEmpty() && email.getText().toString().isEmpty())

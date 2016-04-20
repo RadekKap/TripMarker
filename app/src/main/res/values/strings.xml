@@ -8,5 +8,11 @@
     <string name="title_password">Password</string>
     <string name="title_retype_password">Re-type password</string>
     <string name="title_name">Name</string>
-    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_profile">Profile</string>
+
+    <string name="age">Age:</string>
+    <string name="gender">Gender:</string>
+    <string name="homeplace">Home place:</string>
+    <string name="status">Status:</string>
+    <string name="lastadded">Last added marks:</string>
 </resources>
