@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onAuthenticated(AuthData authData) {
                         Intent goToMap = new Intent(LoginActivity.this, ProfileActivity.class);
                         LoginActivity.this.startActivity(goToMap);
+                        finish();
                     }
 
                     @Override
