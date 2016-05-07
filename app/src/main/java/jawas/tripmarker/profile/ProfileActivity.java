@@ -37,7 +37,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         UID = getIntent().getStringExtra((String) getResources().getText(R.string.uid_var));
 
-        Firebase database = new Firebase("https://tripmarker.firebaseio.com/");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -49,22 +48,13 @@ public class ProfileActivity extends AppCompatActivity {
         AdView banner = (AdView) findViewById( R.id.profileBanner);
         //TODO: Zmien numer urzadzenia testowego na swoj
         AdRequest request = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("0D5BB761E332D5A158D5C5AABBB949A2").build();
+                .addTestDevice("A57130D4686E461E45488E4878E17114").build();
         banner.loadAd(request);
 
 
-        database.child("users").child("GL").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                Log.i("Snapshot", "name: " + (String)snapshot.child("name").getValue() +
-                        "age: " + (Long)snapshot.child("age").getValue());
-            }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Log.i("ERROR", "DataSnapshot error");
-            }
-        });
+
+
     }
 
     public void addUser(String key, User user, Firebase context){
