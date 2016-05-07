@@ -1,53 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_sign_up" tools:context="jawas.tripmarker.login.SignUpActivity">
 
-    <EditText
-        style="@style/input"
-        android:inputType="textEmailAddress"
-        android:id="@+id/email"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/title_email"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin">
 
-    <EditText
-        style="@style/input"
-        android:inputType="textPassword"
-        android:id="@+id/password"
-        android:layout_below="@+id/email"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/title_password"/>
+            <EditText
+                style="@style/input"
+                android:inputType="textEmailAddress"
+                android:id="@+id/email"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:hint="@string/title_email"/>
 
-    <EditText
-        style="@style/input"
-        android:inputType="textPassword"
-        android:id="@+id/retype_password"
-        android:layout_below="@+id/password"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/title_retype_password"/>
+            <EditText
+                style="@style/input"
+                android:inputType="textPassword"
+                android:id="@+id/password"
+                android:layout_below="@+id/email"
+                android:layout_centerHorizontal="true"
+                android:hint="@string/title_password"/>
 
-    <EditText
-        style="@style/input"
-        android:inputType="textPersonName"
-        android:id="@+id/name"
-        android:layout_below="@+id/retype_password"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/title_name"/>
+            <EditText
+                style="@style/input"
+                android:inputType="textPassword"
+                android:id="@+id/retype_password"
+                android:layout_below="@+id/password"
+                android:layout_centerHorizontal="true"
+                android:hint="@string/title_retype_password"/>
 
-    <Button
-        style="@style/button"
-        android:text="@string/sign_up"
-        android:id="@+id/sign_up"
-        android:layout_below="@+id/name"
-        android:layout_centerHorizontal="true"
-        android:onClick="signUp"
-        android:layout_marginTop="50dp"/>
+            <EditText
+                style="@style/input"
+                android:inputType="textPersonName"
+                android:id="@+id/name"
+                android:layout_below="@+id/retype_password"
+                android:layout_centerHorizontal="true"
+                android:hint="@string/title_name"/>
+
+            <EditText
+                style="@style/input"
+                android:inputType="number"
+                android:id="@+id/age"
+                android:layout_below="@+id/name"
+                android:layout_centerHorizontal="true"
+                android:hint="@string/title_age"/>
+
+            <EditText
+                style="@style/input"
+                android:inputType="text"
+                android:id="@+id/gender"
+                android:layout_below="@+id/age"
+                android:layout_centerHorizontal="true"
+                android:hint="@string/title_gender"/>
+
+            <EditText
+                style="@style/input"
+                android:inputType="text"
+                android:id="@+id/homeplace"
+                android:layout_below="@+id/gender"
+                android:layout_centerHorizontal="true"
+                android:hint="@string/title_homeplace"/>
+
+            <Button
+                style="@style/button"
+                android:text="@string/sign_up"
+                android:id="@+id/sign_up"
+                android:layout_below="@+id/homeplace"
+                android:layout_centerHorizontal="true"
+                android:onClick="signUp"
+                android:layout_marginTop="50dp"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

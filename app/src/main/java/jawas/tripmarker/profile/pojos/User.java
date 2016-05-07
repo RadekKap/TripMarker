@@ -18,6 +18,10 @@ public class User {
         this.gender = gender;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public int getAge() {
         return age;
     }
