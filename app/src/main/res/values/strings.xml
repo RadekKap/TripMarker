@@ -4,6 +4,7 @@
     <string name="title_activity_login">Login</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
+    
     <string name="title_email">Email</string>
     <string name="title_password">Password</string>
     <string name="title_retype_password">Re-type password</string>
@@ -18,6 +19,9 @@
     <string name="homeplace">Home place:</string>
     <string name="status">Status:</string>
     <string name="lastadded">Last added marks:</string>
+    
+    <string name="action_search">Search location</string>
+    <string name="action_add_location">Add location</string>
 
     <string name="profileBanner">ca-app-pub-9099426459700291/6945244366</string>
 

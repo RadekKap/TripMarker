@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -69,6 +71,13 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void addUser(String key, User user, Firebase context){
         context.child("users").child(key).setValue(user);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.profile_actions, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     public class CollectionPagerAdapter extends FragmentPagerAdapter{
