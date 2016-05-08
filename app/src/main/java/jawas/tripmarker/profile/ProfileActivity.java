@@ -1,5 +1,6 @@
 package jawas.tripmarker.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
@@ -19,8 +21,10 @@ import com.firebase.client.ValueEventListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import jawas.tripmarker.MapsActivity;
 import jawas.tripmarker.R;
-import jawas.tripmarker.profile.pojos.User;
+import jawas.tripmarker.helpers.FirebaseRef;
+import jawas.tripmarker.pojos.User;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -37,8 +41,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         UID = getIntent().getStringExtra((String) getResources().getText(R.string.uid_var));
 
-        Firebase database = new Firebase("https://tripmarker.firebaseio.com/");
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -53,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         banner.loadAd(request);
 
 
-        database.child("users").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseRef.getDbContext().child("users").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 ((TextView)ProfileActivity.this.findViewById(R.id.name)).append(" "+snapshot.child("name").getValue());
@@ -78,6 +80,17 @@ public class ProfileActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.profile_actions, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.search_location :
+                startActivity(new Intent(this, MapsActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public class CollectionPagerAdapter extends FragmentPagerAdapter{

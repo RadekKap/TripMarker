@@ -13,7 +13,8 @@ import com.firebase.client.FirebaseError;
 import java.util.Map;
 
 import jawas.tripmarker.R;
-import jawas.tripmarker.profile.pojos.User;
+import jawas.tripmarker.helpers.FirebaseRef;
+import jawas.tripmarker.pojos.User;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -36,28 +37,27 @@ public class SignUpActivity extends AppCompatActivity {
                 && !name.getText().toString().isEmpty()
                 && !password.getText().toString().isEmpty())
         {
-            final Firebase firebase = new Firebase("https://tripmarker.firebaseio.com/");
-
-            firebase.createUser(email.getText().toString(), password.getText().toString(),
+            final Firebase context = FirebaseRef.getDbContext();
+            context.createUser(email.getText().toString(), password.getText().toString(),
                     new Firebase.ValueResultHandler<Map<String, Object>>() {
                         @Override
                         public void onSuccess(Map<String, Object> result) {
-                            String uid = (String)result.get("uid");
+                            String uid = (String) result.get("uid");
                             String name = ((EditText) findViewById(R.id.name)).getText().toString();
                             String age = ((EditText) findViewById(R.id.age)).getText().toString();
                             String homeplace = ((EditText) findViewById(R.id.homeplace)).getText().toString();
                             String gender = ((EditText) findViewById(R.id.gender)).getText().toString();
-                            firebase.child("users").child(uid).setValue(new User(uid, name,Integer.parseInt(age),homeplace,gender));
+                            context.child("users").child(uid).setValue(new User(uid, name, Integer.parseInt(age), homeplace, gender));
                             finish();
                         }
 
                         @Override
                         public void onError(FirebaseError firebaseError) {
                             String error = firebaseError.toString();
-                            if(error.length()!=147)
-                            Toast.makeText(getApplicationContext(), error.substring(15), Toast.LENGTH_LONG).show();
+                            if (error.length() != 147)
+                                Toast.makeText(getApplicationContext(), error.substring(15), Toast.LENGTH_LONG).show();
                             else
-                            Toast.makeText(getApplicationContext(), "You don"+ "\'" + "t have access to the Internet", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "You don" + "\'" + "t have access to the Internet", Toast.LENGTH_LONG).show();
                         }
                     });
 

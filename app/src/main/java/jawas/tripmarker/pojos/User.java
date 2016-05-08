@@ -1,4 +1,4 @@
-package jawas.tripmarker.profile.pojos;
+package jawas.tripmarker.pojos;
 
 public class User {
 
