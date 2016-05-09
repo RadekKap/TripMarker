@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ public class VisitedPlacesFragment extends Fragment {
     private ArrayAdapter<String> adapter ;
     public ArrayList<String> places;
 
-    Button btnAdd;
+    ImageButton btnAdd;
     Firebase database = new Firebase("https://vivid-torch-556.firebaseio.com/");
 
     public static VisitedPlacesFragment newInstance() {
@@ -85,7 +86,7 @@ public class VisitedPlacesFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_visited_places, container, false);
 
         list = (ListView)view.findViewById(R.id.listView);
-        btnAdd = (Button) view.findViewById(R.id.addButton);
+        btnAdd = (ImageButton) view.findViewById(R.id.imageButton);
         final EditText placetextField = (EditText) view.findViewById(R.id.placeTextField);
 
         getlist();

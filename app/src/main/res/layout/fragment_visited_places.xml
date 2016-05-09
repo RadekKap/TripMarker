@@ -1,7 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="jawas.tripmarker.profile.VisitedPlacesFragment">
+    tools:context="jawas.tripmarker.profile.VisitedPlacesFragment"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+   >
 
 
     <ListView
@@ -12,17 +16,18 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="false" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add"
-        android:id="@+id/addButton"
-        android:layout_gravity="left"
-        android:nestedScrollingEnabled="false"
-        android:layout_alignBottom="@+id/placeTextField"
+    <ImageButton
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/imageButton"
+        android:background="@drawable/oval"
+        android:src="@drawable/ic_add_circle_white_48dp"
+        android:layout_alignTop="@+id/placeTextField"
         android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2" />
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_marginLeft="48dp"
+        android:layout_marginStart="48dp" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,8 +48,8 @@
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/addButton"
-        android:layout_toStartOf="@+id/addButton" />
+        android:layout_toLeftOf="@+id/imageButton"
+        android:layout_toStartOf="@+id/imageButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,5 +61,7 @@
         android:layout_below="@+id/placeTextField"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+
 
 </RelativeLayout>
