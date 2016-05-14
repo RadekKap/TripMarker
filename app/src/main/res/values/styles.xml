@@ -22,7 +22,7 @@
     </style>
 
     <style name="button" parent="layout_wrap_content">
-        <item name="android:background">@drawable/button</item>
+        <item name="android:background">@drawable/button_states</item>
         <item name="android:alpha">0.75</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>

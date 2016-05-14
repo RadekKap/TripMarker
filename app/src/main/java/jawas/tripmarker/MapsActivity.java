@@ -30,6 +30,7 @@ import jawas.tripmarker.fragments.AddLocationFragment;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private Menu menu;
     public static final String FRAGMENT_TAG = "addLocFragment";
 
     @Override
@@ -55,6 +56,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_actions, menu);
+        this.menu = menu;
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -65,6 +67,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 AddLocationFragment fragment = AddLocationFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().add(R.id.container, fragment, FRAGMENT_TAG).commit();
                 return true;
+            case R.id.confirm_position:
+                item.setVisible(false);
+                menu.findItem(R.id.add_location).setVisible(true);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -85,6 +90,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void confirmLocDescr(View view){
         String descr = ((EditText)findViewById(R.id.location_description)).getText().toString();
         String name = ((EditText)findViewById(R.id.location_name)).getText().toString();
+
+        menu.findItem(R.id.confirm_position).setVisible(true);
+        menu.findItem(R.id.add_location).setVisible(false);
 
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         if(fragment != null)
