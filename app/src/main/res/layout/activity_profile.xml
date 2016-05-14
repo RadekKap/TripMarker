@@ -25,7 +25,7 @@
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/profileBanner"
-        style="@style/layout_size"
+        style="@style/layout_wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         ads:adSize="SMART_BANNER"

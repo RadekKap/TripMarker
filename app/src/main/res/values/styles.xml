@@ -11,36 +11,42 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="layout_size">
+    <style name="layout_wrap_content">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="button" parent="layout_size">
+    <style name="layout_match_parent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="button" parent="layout_wrap_content">
         <item name="android:background">@drawable/button</item>
         <item name="android:alpha">0.75</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="input" parent="layout_size">
+    <style name="input" parent="layout_wrap_content">
         <item name="android:textColorHint">@color/white</item>
         <item name="android:textStyle">bold</item>
         <item name="android:ems">10</item>
     </style>
 
-    <style name="background">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+    <style name="background" parent="layout_match_parent">
         <item name="android:background">@color/colorBackground</item>
-        <item name="android:fitsSystemWindows">true</item>
     </style>
 
-    <style name="text" parent="layout_size">
+    <style name="background_transparent" parent="layout_match_parent">
+        <item name="android:background">#99FF0000</item>
+    </style>
+
+    <style name="text" parent="layout_wrap_content">
         <item name="android:layout_column">1</item>
     </style>
 
-    <style name="image" parent="layout_size">
+    <style name="image" parent="layout_wrap_content">
         <item name="android:layout_column">0</item>
     </style>
 </resources>

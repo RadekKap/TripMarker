@@ -49,11 +49,9 @@ public class ProfileActivity extends AppCompatActivity {
         pager.setAdapter( adapter );
 
         AdView banner = (AdView) findViewById( R.id.profileBanner);
-
         AdRequest request = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("0D5BB761E332D5A158D5C5AABBB949A2").build();
         banner.loadAd(request);
-
 
         FirebaseRef.getDbContext().child("users").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
