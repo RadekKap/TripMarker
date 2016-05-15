@@ -24,6 +24,7 @@ import com.google.android.gms.ads.AdView;
 import jawas.tripmarker.MapsActivity;
 import jawas.tripmarker.R;
 import jawas.tripmarker.helpers.FirebaseRef;
+import jawas.tripmarker.helpers.UserId;
 import jawas.tripmarker.pojos.User;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -39,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_profile);
 
-        UID = getIntent().getStringExtra((String) getResources().getText(R.string.uid_var));
+        UID = UserId.getUID();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

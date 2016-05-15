@@ -13,6 +13,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import jawas.tripmarker.helpers.FirebaseRef;
+import jawas.tripmarker.helpers.UserId;
 import jawas.tripmarker.profile.ProfileActivity;
 import jawas.tripmarker.R;
 
@@ -44,9 +45,8 @@ public class LoginActivity extends AppCompatActivity {
                      password.getText().toString(), new Firebase.AuthResultHandler() {
                          @Override
                          public void onAuthenticated(AuthData authData) {
-                             Intent goToMap = new Intent(LoginActivity.this, ProfileActivity.class);
-                             goToMap.putExtra((String) getResources().getText(R.string.uid_var), authData.getUid());
-                             LoginActivity.this.startActivity(goToMap);
+                             UserId.setUID(authData.getUid());
+                             LoginActivity.this.startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
                              finish();
                          }
 

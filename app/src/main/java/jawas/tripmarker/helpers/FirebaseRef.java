@@ -4,13 +4,9 @@ import com.firebase.client.Firebase;
 
 public class FirebaseRef {
 
-    static private Firebase fireRef;
+    private static final Firebase fireRef = new Firebase("https://tripmarker.firebaseio.com/");
 
-    static public Firebase getDbContext(){
+    public static Firebase getDbContext(){
         return fireRef;
-    }
-
-    static{
-        fireRef = new Firebase("https://tripmarker.firebaseio.com/");
     }
 }

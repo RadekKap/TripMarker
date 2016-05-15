@@ -26,8 +26,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import jawas.tripmarker.fragments.AddLocationFragment;
+import jawas.tripmarker.helpers.FirebaseRef;
+import jawas.tripmarker.helpers.LocationPool;
+import jawas.tripmarker.helpers.UserId;
+import jawas.tripmarker.pojos.Location;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
     private GoogleMap mMap;
     private Menu menu;
@@ -64,12 +68,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.add_location:
+                item.setEnabled(false);
                 AddLocationFragment fragment = AddLocationFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().add(R.id.container, fragment, FRAGMENT_TAG).commit();
                 return true;
             case R.id.confirm_position:
                 item.setVisible(false);
-                menu.findItem(R.id.add_location).setVisible(true);
+                FirebaseRef.getDbContext().child("markers").push().setValue(LocationPool.getLocationPool().getLocation());
+                menu.findItem(R.id.add_location).setEnabled(true);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -85,23 +91,48 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         }
+        mMap.setOnMarkerDragListener(this);
     }
 
     public void confirmLocDescr(View view){
-        String descr = ((EditText)findViewById(R.id.location_description)).getText().toString();
-        String name = ((EditText)findViewById(R.id.location_name)).getText().toString();
-
         menu.findItem(R.id.confirm_position).setVisible(true);
-        menu.findItem(R.id.add_location).setVisible(false);
 
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-        if(fragment != null)
-            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        removeFragment();
 
         LatLng position = new LatLng(-34, 151);
         Marker marker = mMap.addMarker(new MarkerOptions().position(position)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
         marker.setDraggable(true);
+
+        //*******
+        String descr = ((EditText)findViewById(R.id.location_description)).getText().toString();
+        String name = ((EditText)findViewById(R.id.location_name)).getText().toString();
+
+        LocationPool.setLocationPool(marker, new Location(descr,
+                marker.getPosition().latitude, marker.getPosition().longitude, name, UserId.getUID()));
+        //********
+    }
+
+    public void removeAddLocation(View view){
+        removeFragment();
+        menu.findItem(R.id.add_location).setEnabled(true);
+    }
+
+    public void removeFragment(){
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+        if(fragment != null)
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {}
+
+    @Override
+    public void onMarkerDrag(Marker marker) {}
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        LocationPool.getLocationPool().setCurrentPosition( marker.getPosition().latitude, marker.getPosition().longitude);
     }
 }
