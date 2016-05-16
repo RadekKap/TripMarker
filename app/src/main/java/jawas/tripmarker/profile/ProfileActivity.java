@@ -84,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.search_location :
+            case R.id.go_to_map:
                 startActivity(new Intent(this, MapsActivity.class));
                 return true;
             default:

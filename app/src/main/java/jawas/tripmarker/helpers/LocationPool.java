@@ -2,21 +2,21 @@ package jawas.tripmarker.helpers;
 
 import com.google.android.gms.maps.model.Marker;
 
-import jawas.tripmarker.pojos.Location;
+import jawas.tripmarker.pojos.LocationMarker;
 
 public class LocationPool
 {
     private static LocationPool pool = new LocationPool();
     private Marker marker;
-    private Location location;
+    private LocationMarker location;
 
     private LocationPool(){}
 
-    public Location getLocation() {
+    public LocationMarker getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(LocationMarker location) {
         this.location = location;
     }
 
@@ -24,7 +24,7 @@ public class LocationPool
         this.marker = marker;
     }
 
-    public static void setLocationPool(Marker markerArg, Location locationArg){
+    public static void setLocationPool(Marker markerArg, LocationMarker locationArg){
         pool.setLocation(locationArg);
         pool.setMarker(markerArg);
     }

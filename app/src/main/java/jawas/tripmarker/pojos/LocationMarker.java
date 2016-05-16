@@ -1,20 +1,20 @@
 package jawas.tripmarker.pojos;
 
-public class Location {
+public class LocationMarker {
 
     private String userId;
     private double latitude;
-    private double longtitude;
+    private double longitude;
     private String title;
     private String description;
 
 
-    public Location(){}
+    public LocationMarker(){}
 
-    public Location(String description, double latitude, double longtitude, String title, String userId) {
+    public LocationMarker(String description, double latitude, double longitude, String title, String userId) {
         this.description = description;
         this.latitude = latitude;
-        this.longtitude = longtitude;
+        this.longitude = longitude;
         this.title = title;
         this.userId = userId;
     }
@@ -28,8 +28,8 @@ public class Location {
         return latitude;
     }
 
-    public double getLongtitude() {
-        return longtitude;
+    public double getLongitude() {
+        return longitude;
     }
 
     public String getTitle() {
@@ -41,8 +41,8 @@ public class Location {
     }
 
 
-    public void setLongtitude(double longtitude) {
-        this.longtitude = longtitude;
+    public void setLongtitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public void setLatitude(double latitude) {

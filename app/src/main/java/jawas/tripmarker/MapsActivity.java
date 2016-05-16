@@ -2,10 +2,17 @@ package jawas.tripmarker;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,18 +32,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+
 import jawas.tripmarker.fragments.AddLocationFragment;
 import jawas.tripmarker.helpers.FirebaseRef;
 import jawas.tripmarker.helpers.LocationPool;
 import jawas.tripmarker.helpers.UserId;
-import jawas.tripmarker.pojos.Location;
+import jawas.tripmarker.pojos.LocationMarker;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
     private GoogleMap mMap;
     private Menu menu;
     public static final String FRAGMENT_TAG = "addLocFragment";
-
+    public static double lat, lng;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +70,30 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_actions, menu);
         this.menu = menu;
+        SearchView search = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search_location));
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (query != null || !query.equals("")) {
+                    Address address = null;
+                    Geocoder geocoder = new Geocoder(MapsActivity.this);
+                    try {
+                        address = geocoder.getFromLocationName(query, 1).get(0);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.zoomTo(13.0F));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -71,11 +104,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 item.setEnabled(false);
                 AddLocationFragment fragment = AddLocationFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().add(R.id.container, fragment, FRAGMENT_TAG).commit();
+                LatLng latLng = getCurrentLocation();
+                lat = latLng.latitude;
+                lng = latLng.longitude;
                 return true;
             case R.id.confirm_position:
                 item.setVisible(false);
+                menu.findItem(R.id.cancel_position).setVisible(false);
                 FirebaseRef.getDbContext().child("markers").push().setValue(LocationPool.getLocationPool().getLocation());
                 menu.findItem(R.id.add_location).setEnabled(true);
+                menu.findItem(R.id.cancel_position).setVisible(false);
+                return true;
+            case R.id.cancel_position:
+                return true;
+            case R.id.search_location:
+                return super.onOptionsItemSelected(item);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -96,12 +139,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void confirmLocDescr(View view){
         menu.findItem(R.id.confirm_position).setVisible(true);
+        menu.findItem(R.id.cancel_position).setVisible(true);
 
         removeFragment();
 
-        LatLng position = new LatLng(-34, 151);
+        LatLng position = new LatLng(lat, lng);
         Marker marker = mMap.addMarker(new MarkerOptions().position(position)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(10.0F));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
         marker.setDraggable(true);
 
@@ -109,7 +154,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String descr = ((EditText)findViewById(R.id.location_description)).getText().toString();
         String name = ((EditText)findViewById(R.id.location_name)).getText().toString();
 
-        LocationPool.setLocationPool(marker, new Location(descr,
+        LocationPool.setLocationPool(marker, new LocationMarker(descr,
                 marker.getPosition().latitude, marker.getPosition().longitude, name, UserId.getUID()));
         //********
     }
@@ -123,6 +168,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         if(fragment != null)
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+    }
+
+    private LatLng getCurrentLocation(){
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+            String provider = locationManager.getBestProvider(criteria, true);
+            Location location = locationManager.getLastKnownLocation(provider);
+
+            if (location != null) {
+                return new LatLng(location.getLatitude(), location.getLongitude());
+            }
+        }
+        return null;
     }
 
     @Override

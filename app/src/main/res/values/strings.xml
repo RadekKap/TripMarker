@@ -30,6 +30,7 @@
     <string name="action_search">Search location</string>
     <string name="action_add_location">Add location</string>
     <string name="action_confirm_marker">Confirm position</string>
+    <string name="action_map">Go to map</string>
 
     <!--Banners keys-->
     <string name="profileBanner">ca-app-pub-9099426459700291/6945244366</string>

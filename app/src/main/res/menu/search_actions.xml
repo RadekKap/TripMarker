@@ -11,4 +11,16 @@
         android:icon="@drawable/ic_done_black_24dp"
         app:showAsAction="always"
         android:visible="false"/>
+
+    <item android:id="@+id/cancel_position"
+        android:title="@string/cancel"
+        android:icon="@drawable/ic_clear_black_24dp"
+        app:showAsAction="always"
+        android:visible="false" />
+
+    <item android:id="@+id/search_location"
+        android:title="@string/action_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView"/>
 </menu>
