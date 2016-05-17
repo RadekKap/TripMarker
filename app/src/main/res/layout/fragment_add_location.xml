@@ -1,0 +1,54 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="jawas.tripmarker.fragments.AddLocationFragment"
+    style="@style/background_transparent"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true">
+
+    <RelativeLayout android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <EditText style="@style/input"
+            android:id="@+id/location_name"
+            android:hint="@string/title_location"
+            android:layout_centerHorizontal="true"/>
+
+        <EditText style="@style/input"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/location_description"
+            android:hint="@string/title_description"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/location_name"/>
+
+        <Button style="@style/layout_wrap_content"
+            android:background="@color/white"
+            android:text="@string/confirm"
+            android:id="@+id/confirm_location"
+            android:onClick="confirmLocDescr"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/location_description"/>
+
+
+        <Button style="@style/layout_wrap_content"
+            android:background="@color/white"
+            android:text="@string/cancel"
+            android:id="@+id/cancel"
+            android:onClick="removeAddLocation"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/confirm_location"/>
+    </RelativeLayout>
+</ScrollView>

@@ -4,19 +4,35 @@
     <string name="title_activity_login">Login</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    
     <string name="title_email">Email</string>
     <string name="title_password">Password</string>
     <string name="title_retype_password">Re-type password</string>
     <string name="title_name">Name</string>
+    <string name="title_age">Age</string>
+    <string name="title_gender">Gender</string>
+    <string name="title_homeplace">Homeplace</string>
     <string name="title_activity_profile">Profile</string>
 
+    <string name="title_location">Location name</string>
+    <string name="title_description">Describe this place</string>
+
+    <!--Profile-->
     <string name="age">Age:</string>
     <string name="gender">Gender:</string>
     <string name="homeplace">Home place:</string>
     <string name="status">Status:</string>
     <string name="lastadded">Last added marks:</string>
 
-    <string name="profileBanner">ca-app-pub-9099426459700291/6945244366</string>
+    <!--Action bar items hints-->
+    <string name="action_search">Search location</string>
+    <string name="action_add_location">Add location</string>
+    <string name="action_confirm_marker">Confirm position</string>
+    <string name="action_map">Go to map</string>
 
-    <string name="uid_var">uid</string>
+    <!--Banners keys-->
+    <string name="profileBanner">ca-app-pub-9099426459700291/6945244366</string>
+    <string name="mapBanner">ca-app-pub-9099426459700291/8679219163</string>
 </resources>

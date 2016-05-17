@@ -1,4 +1,4 @@
-package jawas.tripmarker.profile.pojos;
+package jawas.tripmarker.pojos;
 
 public class User {
 
@@ -16,6 +16,10 @@ public class User {
         this.age = age;
         this.homeplace = homeplace;
         this.gender = gender;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public int getAge() {

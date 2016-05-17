@@ -16,11 +16,11 @@ import com.firebase.client.ValueEventListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import jawas.tripmarker.MapsActivity;
 import jawas.tripmarker.R;
-import jawas.tripmarker.profile.pojos.User;
+import jawas.tripmarker.helpers.FirebaseRef;
+import jawas.tripmarker.helpers.UserId;
+import jawas.tripmarker.pojos.User;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -35,7 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_profile);
 
-        UID = getIntent().getStringExtra((String) getResources().getText(R.string.uid_var));
+        UID = UserId.getUID();
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -51,10 +51,21 @@ public class ProfileActivity extends AppCompatActivity {
                 .addTestDevice("A57130D4686E461E45488E4878E17114").build();
         banner.loadAd(request);
 
+        FirebaseRef.getDbContext().child("users").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                ((TextView)ProfileActivity.this.findViewById(R.id.name)).append(" "+snapshot.child("name").getValue());
+                ((TextView)ProfileActivity.this.findViewById(R.id.age)).append(" "+snapshot.child("age").getValue());
+                ((TextView)ProfileActivity.this.findViewById(R.id.gender)).append(" "+snapshot.child("gender").getValue());
+                ((TextView)ProfileActivity.this.findViewById(R.id.homeplace)).append(" "+snapshot.child("homeplace").getValue());
+            }
 
 
-
-
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.i("ERROR", "DataSnapshot error");
+            }
+        });
     }
 
     public void addUser(String key, User user, Firebase context){
@@ -62,6 +73,24 @@ public class ProfileActivity extends AppCompatActivity {
         post1.put(key, " ");
         context.child("users").updateChildren(post1);
         context.child("users").child(key).setValue(user);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.profile_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.go_to_map:
+                startActivity(new Intent(this, MapsActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public class CollectionPagerAdapter extends FragmentPagerAdapter{

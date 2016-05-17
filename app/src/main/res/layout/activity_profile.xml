@@ -12,7 +12,8 @@
 
         <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
             android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:elevation="4dp"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -24,7 +25,7 @@
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/profileBanner"
-        style="@style/layout_size"
+        style="@style/layout_wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         ads:adSize="SMART_BANNER"

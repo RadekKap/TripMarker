@@ -12,6 +12,8 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import jawas.tripmarker.helpers.FirebaseRef;
+import jawas.tripmarker.helpers.UserId;
 import jawas.tripmarker.profile.ProfileActivity;
 import jawas.tripmarker.R;
 
@@ -38,28 +40,26 @@ public class LoginActivity extends AppCompatActivity {
         EditText password = (EditText) findViewById(R.id.password);
 
         if(!password.getText().toString().isEmpty() || !email.getText().toString().isEmpty() ) {
-           Firebase database = new Firebase("https://tripmarker.firebaseio.com/");
 
-             database.authWithPassword(email.getText().toString(),
-                password.getText().toString(), new Firebase.AuthResultHandler() {
-                    @Override
-                    public void onAuthenticated(AuthData authData) {
-                        Intent goToMap = new Intent(LoginActivity.this, ProfileActivity.class);
-                        goToMap.putExtra( (String)getResources().getText(R.string.uid_var), authData.getUid());
-                        LoginActivity.this.startActivity(goToMap);
-                        finish();
-                    }
+             FirebaseRef.getDbContext().authWithPassword(email.getText().toString(),
+                     password.getText().toString(), new Firebase.AuthResultHandler() {
+                         @Override
+                         public void onAuthenticated(AuthData authData) {
+                             UserId.setUID(authData.getUid());
+                             LoginActivity.this.startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+                             finish();
+                         }
 
-                    @Override
-                    public void onAuthenticationError(FirebaseError firebaseError) {
-                        String error = firebaseError.toString();
+                         @Override
+                         public void onAuthenticationError(FirebaseError firebaseError) {
+                             String error = firebaseError.toString();
 
-                        if(error.length()!=164)
-                            Toast.makeText(getApplicationContext(), error.substring(15), Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(getApplicationContext(), "You don"+ "\'" + "t have access to the Internet", Toast.LENGTH_LONG).show();
-                    }
-                });
+                             if (error.length() != 164)
+                                 Toast.makeText(getApplicationContext(), error.substring(15), Toast.LENGTH_LONG).show();
+                             else
+                                 Toast.makeText(getApplicationContext(), "You don" + "\'" + "t have access to the Internet", Toast.LENGTH_LONG).show();
+                         }
+                     });
         }
         int i=0;
             if(password.getText().toString().isEmpty() && email.getText().toString().isEmpty())
