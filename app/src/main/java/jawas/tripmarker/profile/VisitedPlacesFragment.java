@@ -23,15 +23,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.lang.Object;
 import jawas.tripmarker.R;
+import jawas.tripmarker.helpers.FirebaseRef;
+import jawas.tripmarker.helpers.UserId;
 
 public class VisitedPlacesFragment extends Fragment {
 
+    private static String UID;
     private ListView list ;
     private ArrayAdapter<String> adapter ;
     public ArrayList<String> places;
 
     ImageButton btnAdd;
-    Firebase database = new Firebase("https://vivid-torch-556.firebaseio.com/");
+    Firebase database;
 
     public static VisitedPlacesFragment newInstance() {
         VisitedPlacesFragment fragment = new VisitedPlacesFragment();
@@ -47,7 +50,7 @@ public class VisitedPlacesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Firebase.setAndroidContext(getActivity());
 
-
+        UID = UserId.getUID();
        // database.child("Vp").setValue(places1);
 
 
@@ -55,17 +58,18 @@ public class VisitedPlacesFragment extends Fragment {
 
     public void getlist()
     {
-        database.child("Vp").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseRef.getDbContext().child("users").child(UID).child("VP").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 
                 if (snapshot != null) {
                     GenericTypeIndicator<ArrayList<String>> t = new GenericTypeIndicator<ArrayList<String>>() {
                     };
-                    places = snapshot.getValue(t);
+                    if(snapshot.getValue(t)!=null)
+                    { places = snapshot.getValue(t);
 
-                    adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, places);
-                    list.setAdapter(adapter);
+                    adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, places);
+                    list.setAdapter(adapter);}
 
                 }
             }
@@ -90,7 +94,9 @@ public class VisitedPlacesFragment extends Fragment {
         final EditText placetextField = (EditText) view.findViewById(R.id.placeTextField);
 
         getlist();
-
+        if (places==null) {
+            places = new ArrayList<String>();
+        }
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,13 +104,14 @@ public class VisitedPlacesFragment extends Fragment {
 
                 if (placetextField.getText().toString().equals("") == false) {
 
-                        places.add(placetextField.getText().toString());
-                        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, places);
-                        list.setAdapter(adapter);
 
-                        database.child("Vp").setValue(places);
-                        Toast.makeText(getActivity().getApplicationContext(), "You have added " + placetextField.getText().toString() + " to your places", Toast.LENGTH_LONG).show();
-                        placetextField.setText("");
+                    places.add(placetextField.getText().toString());
+                    adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, places);
+                    list.setAdapter(adapter);
+
+                    FirebaseRef.getDbContext().child("users").child(UID).child("VP").setValue(places);
+                    Toast.makeText(getActivity().getApplicationContext(), "You have added " + placetextField.getText().toString() + " to your places", Toast.LENGTH_LONG).show();
+                    placetextField.setText("");
 
 
                     // adapter.notifyDataSetChanged();
