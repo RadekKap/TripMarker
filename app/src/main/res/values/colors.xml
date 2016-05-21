@@ -5,4 +5,7 @@
     <color name="colorBackground">#8f99d6</color>
     <color name="buttonPressed">#4e5fca</color>
     <color name="white">#ffffff</color>
+    <color name="addbuttcol">#8E89C9</color>
+    <color name="rembuttcol">#FF6D5C</color>
+
 </resources>
