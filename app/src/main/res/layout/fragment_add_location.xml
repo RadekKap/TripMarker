@@ -29,7 +29,7 @@
             android:layout_below="@+id/location_name"/>
 
         <Button style="@style/layout_wrap_content"
-            android:background="@color/white"
+            android:background="@drawable/add_loc_button_states"
             android:text="@string/confirm"
             android:id="@+id/confirm_location"
             android:onClick="confirmLocDescr"
@@ -41,7 +41,7 @@
 
 
         <Button style="@style/layout_wrap_content"
-            android:background="@color/white"
+            android:background="@drawable/add_loc_button_states"
             android:text="@string/cancel"
             android:id="@+id/cancel"
             android:onClick="removeAddLocation"

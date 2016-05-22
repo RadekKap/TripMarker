@@ -24,6 +24,10 @@ public class LocationPool
         this.marker = marker;
     }
 
+    public Marker getMarker() {
+        return marker;
+    }
+
     public static void setLocationPool(Marker markerArg, LocationMarker locationArg){
         pool.setLocation(locationArg);
         pool.setMarker(markerArg);

@@ -19,7 +19,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -46,6 +51,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Menu menu;
     public static final String FRAGMENT_TAG = "addLocFragment";
     public static double lat, lng;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,11 +117,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.confirm_position:
                 item.setVisible(false);
                 menu.findItem(R.id.cancel_position).setVisible(false);
-                FirebaseRef.getDbContext().child("markers").push().setValue(LocationPool.getLocationPool().getLocation());
+                FirebaseRef.getDbContext().child("markers").push().setValue(LocationPool.getLocationPool().getLocation(),
+                        new Firebase.CompletionListener() {
+                            @Override
+                            public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                                if(firebaseError == null){
+                                    LocationMarker location = LocationPool.getLocationPool().getLocation();
+                                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                    mMap.addMarker(new MarkerOptions().position(latLng)
+                                            .title(location.getTitle()).snippet(location.getDescription()));
+                                    removePoolMarker();
+                                }
+                                else{
+                                    Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+                removePoolMarker();
                 menu.findItem(R.id.add_location).setEnabled(true);
                 menu.findItem(R.id.cancel_position).setVisible(false);
                 return true;
             case R.id.cancel_position:
+                removePoolMarker();
+                item.setVisible(false);
+                menu.findItem(R.id.add_location).setEnabled(true);
+                menu.findItem(R.id.confirm_position).setVisible(false);
                 return true;
             case R.id.search_location:
                 return super.onOptionsItemSelected(item);
@@ -130,11 +156,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         UiSettings mapStructure = mMap.getUiSettings();
         mapStructure.setCompassEnabled(true);
         mapStructure.setZoomControlsEnabled(true);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-        }
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+//                == PackageManager.PERMISSION_GRANTED) {
+//            mMap.setMyLocationEnabled(true);
+//        }
         mMap.setOnMarkerDragListener(this);
+        loadMarkers();
+    }
+
+    public void loadMarkers(){
+        FirebaseRef.getDbContext().child("markers").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                LocationMarker marker;
+                LatLng latLng;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    marker = snapshot.getValue(LocationMarker.class);
+                    latLng = new LatLng( marker.getLatitude(), marker.getLongitude() );
+                    MapsActivity.this.mMap.addMarker(new MarkerOptions()
+                            .position(latLng).title(marker.getTitle()).snippet(marker.getDescription()));
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {}
+        });
     }
 
     public void confirmLocDescr(View view){
@@ -159,12 +205,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //********
     }
 
+    private void removePoolMarker(){
+        LocationPool.getLocationPool().getMarker().remove();
+    }
+
     public void removeAddLocation(View view){
         removeFragment();
         menu.findItem(R.id.add_location).setEnabled(true);
     }
 
-    public void removeFragment(){
+    private void removeFragment(){
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         if(fragment != null)
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();

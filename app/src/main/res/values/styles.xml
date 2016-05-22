@@ -39,7 +39,7 @@
     </style>
 
     <style name="background_transparent" parent="layout_match_parent">
-        <item name="android:background">#BB5900FF</item>
+        <item name="android:background">#BB7a33ff</item>
     </style>
 
     <style name="text" parent="layout_wrap_content">
