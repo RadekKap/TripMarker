@@ -67,7 +67,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         AdView banner = (AdView) findViewById(R.id.mapBanner);
         AdRequest request = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("0D5BB761E332D5A158D5C5AABBB949A2").build();
+                .addTestDevice("A57130D4686E461E45488E4878E17114").build();
         banner.loadAd(request);
     }
 

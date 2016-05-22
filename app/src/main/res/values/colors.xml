@@ -6,4 +6,6 @@
     <color name="buttonPressed">#4e5fca</color>
     <color name="white">#ffffff</color>
     <color name="colorAddLocPressed">#cdb3ff</color>
+    <color name="addbuttcol">#8E89C9</color>
+    <color name="rembuttcol">#FF6D5C</color>
 </resources>
