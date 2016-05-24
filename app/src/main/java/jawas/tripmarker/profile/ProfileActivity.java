@@ -66,14 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         adapter = new CollectionPagerAdapter( getSupportFragmentManager());
         pager = (ViewPager) findViewById(R.id.pager);
 
-        pager.setAdapter( adapter );
-
-        AdView banner = (AdView) findViewById( R.id.profileBanner);
-        //TODO: Zmien numer urzadzenia testowego na swoj
-        AdRequest request = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("A57130D4686E461E45488E4878E17114").build();
-        banner.loadAd(request);
-
+        pager.setAdapter(adapter);
 //TUTEJ
         Query queryRef = FirebaseRef.getDbContext().child("markers");
 
@@ -159,6 +152,14 @@ public class ProfileActivity extends AppCompatActivity {
                 ((TextView)ProfileActivity.this.findViewById(R.id.age)).append(" "+snapshot.child("age").getValue());
                 ((TextView)ProfileActivity.this.findViewById(R.id.gender)).append(" "+snapshot.child("gender").getValue());
                 ((TextView)ProfileActivity.this.findViewById(R.id.homeplace)).append(" "+snapshot.child("homeplace").getValue());
+
+                int gender = snapshot.child("gender").getValue() == "male" ? AdRequest.GENDER_MALE : AdRequest.GENDER_FEMALE;
+
+                AdView banner = (AdView) findViewById( R.id.profileBanner);
+                AdRequest request = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                        .addTestDevice("0D5BB761E332D5A158D5C5AABBB949A2")
+                        .setGender(gender).build();
+                banner.loadAd(request);
             }
 
 
