@@ -1,5 +1,7 @@
 package jawas.tripmarker.pojos;
 
+import java.util.Date;
+
 public class LocationMarker {
 
     private String userId;
@@ -7,7 +9,7 @@ public class LocationMarker {
     private double longitude;
     private String title;
     private String description;
-
+    private Date date;
 
     public LocationMarker(){}
 
@@ -17,8 +19,8 @@ public class LocationMarker {
         this.longitude = longitude;
         this.title = title;
         this.userId = userId;
+        this.date = new Date();
     }
-
 
     public String getDescription() {
         return description;
@@ -36,10 +38,13 @@ public class LocationMarker {
         return title;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
     public String getUserId() {
         return userId;
     }
-
 
     public void setLongtitude(double longitude) {
         this.longitude = longitude;

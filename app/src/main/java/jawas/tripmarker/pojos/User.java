@@ -2,7 +2,6 @@ package jawas.tripmarker.pojos;
 
 public class User {
 
-    private String id;
     private String name;
     private int age;
     private String homeplace;
@@ -10,16 +9,11 @@ public class User {
 
     public User(){}
 
-    public User( String id, String name, int age, String homeplace, String gender ){
-        this.id = id;
+    public User( String name, int age, String homeplace, String gender ){
         this.name = name;
         this.age = age;
         this.homeplace = homeplace;
         this.gender = gender;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public int getAge() {

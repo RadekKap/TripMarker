@@ -37,7 +37,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import jawas.tripmarker.fragments.AddLocationFragment;
 import jawas.tripmarker.helpers.FirebaseRef;
-import jawas.tripmarker.helpers.LocationPool;
 import jawas.tripmarker.helpers.UserId;
 import jawas.tripmarker.listeners.OnQueyReceiveListener;
 import jawas.tripmarker.pojos.LocationMarker;
@@ -50,6 +49,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public static final String FRAGMENT_TAG = "addLocFragment";
     public static double lat, lng;
     private GoogleApiClient apiClient;
+    private Marker marker;
+    private LocationMarker location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,27 +91,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return true;
             case R.id.confirm_position:
                 item.setVisible(false);
-                FirebaseRef.getDbContext().child("markers").push().setValue(LocationPool.getLocationPool().getLocation(),
+                FirebaseRef.getDbContext().child("markers").push().setValue(location,
                         new Firebase.CompletionListener() {
                             @Override
                             public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                                 if(firebaseError == null){
-                                    LocationMarker location = LocationPool.getLocationPool().getLocation();
+                                    LocationMarker location = MapsActivity.this.location;
                                     LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                                     addMark(latLng, location.getTitle(), location.getDescription());
-                                    removePoolMarker();
+                                    removeMarker();
                                 }
                                 else{
                                     Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
-                removePoolMarker();
+                removeMarker();
                 menu.findItem(R.id.add_location).setEnabled(true);
                 menu.findItem(R.id.cancel_position).setVisible(false);
                 return true;
             case R.id.cancel_position:
-                removePoolMarker();
+                removeMarker();
                 item.setVisible(false);
                 menu.findItem(R.id.add_location).setEnabled(true);
                 menu.findItem(R.id.confirm_position).setVisible(false);
@@ -148,8 +149,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-            }
+            public void onCancelled(FirebaseError firebaseError) {}
         });
     }
 
@@ -173,12 +173,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String descr = ((EditText)findViewById(R.id.location_description)).getText().toString();
         String name = ((EditText)findViewById(R.id.location_name)).getText().toString();
 
-        LocationPool.setLocationPool(marker, new LocationMarker(descr,
-                marker.getPosition().latitude, marker.getPosition().longitude, name, UserId.getUID()));
+        this.marker = marker;
+        this.location = new LocationMarker(descr,
+                marker.getPosition().latitude, marker.getPosition().longitude, name, UserId.getUID());
     }
 
-    private void removePoolMarker(){
-        LocationPool.getLocationPool().getMarker().remove();
+    private void removeMarker(){
+        marker.remove();
     }
 
     public void removeAddLocation(View view){
@@ -200,7 +201,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-        LocationPool.getLocationPool().setCurrentPosition( marker.getPosition().latitude, marker.getPosition().longitude);
+        location.setLatitude(marker.getPosition().latitude);
+        location.setLongtitude(marker.getPosition().longitude);
     }
 
     @Override

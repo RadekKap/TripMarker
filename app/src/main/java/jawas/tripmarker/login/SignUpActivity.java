@@ -47,7 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
                             String age = ((EditText) findViewById(R.id.age)).getText().toString();
                             String homeplace = ((EditText) findViewById(R.id.homeplace)).getText().toString();
                             String gender = ((EditText) findViewById(R.id.gender)).getText().toString();
-                            context.child("users").child(uid).setValue(new User(uid, name, Integer.parseInt(age), homeplace, gender));
+                            context.child("users").child(uid).setValue(new User( name, Integer.parseInt(age), homeplace, gender));
                             finish();
                         }
 
