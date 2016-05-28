@@ -60,13 +60,17 @@
             android:layout_centerHorizontal="true"
             android:hint="@string/title_age"/>
 
-        <EditText
-            style="@style/input"
-            android:inputType="text"
-            android:id="@+id/gender"
+
+        <Spinner android:id="@+id/gender"
+            style = "@style/layout_wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="8dp"
             android:layout_below="@+id/age"
-            android:layout_centerHorizontal="true"
-            android:hint="@string/title_gender"/>
+            android:layout_alignRight="@+id/age"
+            android:layout_alignEnd="@+id/age"
+            android:layout_alignLeft="@+id/sign_up"
+            android:layout_alignStart="@+id/sign_up" />
 
         <EditText
             style="@style/input"
@@ -84,6 +88,19 @@
             android:layout_centerHorizontal="true"
             android:onClick="signUp"
             android:layout_marginTop="50dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/title_gender"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="4dp"
+            android:layout_alignTop="@+id/gender"
+            android:layout_alignLeft="@+id/age"
+            android:layout_alignStart="@+id/age"
+            android:layout_alignBottom="@+id/gender" />
 
     </RelativeLayout>
 </ScrollView>

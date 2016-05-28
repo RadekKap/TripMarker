@@ -35,4 +35,10 @@
     <!--Banners keys-->
     <string name="profileBanner">ca-app-pub-9099426459700291/6945244366</string>
     <string name="mapBanner">ca-app-pub-9099426459700291/8679219163</string>
+
+    <!--Spinner values-->
+    <string-array name="spinner_gender">
+        <item>male</item>
+        <item>female</item>
+    </string-array>
 </resources>

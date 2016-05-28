@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -24,6 +26,12 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Spinner spinner = (Spinner) findViewById(R.id.gender);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.spinner_gender, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 
     public void signUp(View view) {
@@ -46,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
                             String name = ((EditText) findViewById(R.id.name)).getText().toString();
                             String age = ((EditText) findViewById(R.id.age)).getText().toString();
                             String homeplace = ((EditText) findViewById(R.id.homeplace)).getText().toString();
-                            String gender = ((EditText) findViewById(R.id.gender)).getText().toString();
+                            String gender = ((Spinner) findViewById(R.id.gender)).getSelectedItem().toString();
                             context.child("users").child(uid).setValue(new User( name, Integer.parseInt(age), homeplace, gender));
                             finish();
                         }
