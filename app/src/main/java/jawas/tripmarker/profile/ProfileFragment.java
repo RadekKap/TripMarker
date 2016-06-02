@@ -27,7 +27,7 @@ import jawas.tripmarker.helpers.UserId;
 
 public class ProfileFragment extends Fragment {
 
-    // public ArrayList<String> addedplaces;
+
     private ListView listlastadded ;
     private ArrayAdapter<String> adaptertolisview ;
     ArrayList<String> listofplaces;
@@ -50,7 +50,8 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         listofplaces = new ArrayList<>();
-        Query queryRef = FirebaseRef.getDbContext().child("markers");
+        Query queryRef = FirebaseRef.getDbContext().child("markers").orderByChild("userID").limitToLast(4);;
+
 
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -75,9 +76,7 @@ public class ProfileFragment extends Fragment {
                     }
 
 
-            /*    if(listP.size()!=0)
-                { adaptertolisview = new ArrayAdapter<String>(ProfileActivity.this, android.R.layout.simple_list_item_1,listP);
-                listlastadded.setAdapter(adaptertolisview);}*/
+
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
@@ -91,35 +90,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onCancelled(FirebaseError firebaseError) {}
         });
-
-    /*    queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-           @Override
-           public void onDataChange(DataSnapshot snapshot) {
-
-
-
-               for (DataSnapshot child: snapshot.getChildren()) {
-
-                   String usrid=(String) child.child("userId").getValue();
-
-                   if(usrid.equals(UID)==true) {
-                       String place = (String) child.child("title").getValue();
-                       listofplaces.add(place);
-                   }
-               }
-
-               if(listofplaces.size()!=0)
-               {   listlastadded=(ListView)ProfileActivity.this.findViewById(R.id.listViewlastadded);
-                   adaptertolisview = new ArrayAdapter<String>(ProfileActivity.this, android.R.layout.simple_list_item_1,listofplaces);
-                   listlastadded.setAdapter(adaptertolisview);}
-
-           }
-           @Override
-           public void onCancelled(FirebaseError firebaseError) {
-               Log.i("ERROR", "DataSnapshot error");
-           }
-       });
-*/
 
         FirebaseRef.getDbContext().child("users").child(UserId.getUID()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

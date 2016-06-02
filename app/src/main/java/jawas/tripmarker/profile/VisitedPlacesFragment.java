@@ -55,8 +55,6 @@ public class VisitedPlacesFragment extends Fragment {
         Firebase.setAndroidContext(getActivity());
 
         UID = UserId.getUID();
-       // database.child("Vp").setValue(places1);
-
 
     }
 
@@ -72,8 +70,7 @@ public class VisitedPlacesFragment extends Fragment {
                     if(snapshot.getValue(t)!=null)
                     { places = snapshot.getValue(t);
 
-                  /*  adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, places);
-                    list.setAdapter(adapter);*/
+
 
                         list.setAdapter(new MyListAdapter(getActivity(), R.layout.list_item, places));
 
@@ -115,12 +112,7 @@ public class VisitedPlacesFragment extends Fragment {
 
 
                     places.add(placetextField.getText().toString());
-                 /*   adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, places);
-                    list.setAdapter(adapter);
 
-                    */
-                  //  list.deferNotifyDataSetChanged();
-                  //  list.forceLayout();
                     list.setAdapter(new MyListAdapter(getActivity(),R.layout.list_item,places) );
 
 
@@ -165,7 +157,6 @@ public class VisitedPlacesFragment extends Fragment {
 
                    @Override
                    public void onClick(View v) {
-                      // Toast.makeText(getActivity().getApplicationContext(), "You have to type place viewhold " + position, Toast.LENGTH_LONG).show();
                       String temp=values.get(position);
                        places.remove(values.get(position));
 
@@ -184,7 +175,6 @@ public class VisitedPlacesFragment extends Fragment {
 
                    @Override
                    public void onClick(View v) {
-                     //  Toast.makeText(getActivity().getApplicationContext(), "You have to type place mainviewhold " + position, Toast.LENGTH_LONG).show();
                        String temp=values.get(position);
                        places.remove(values.get(position));
 
