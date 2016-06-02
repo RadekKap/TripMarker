@@ -19,6 +19,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import jawas.tripmarker.R;
@@ -50,8 +51,9 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         listofplaces = new ArrayList<>();
-        Query queryRef = FirebaseRef.getDbContext().child("markers");
+        Query queryRef = FirebaseRef.getDbContext().child("markers").orderByChild("userID").limitToLast(4);
 
+        
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -62,8 +64,10 @@ public class ProfileFragment extends Fragment {
 
                 if(usrid.equals(UserId.getUID()))
                 {
-                    if(listofplaces!=null)
+
+                    if(listofplaces!=null) {
                         listofplaces.add(String.valueOf(value.get("title")));
+                    }
                 }
                 if(listofplaces!=null)
                     if(listofplaces.size()!=0 && pom==0)
