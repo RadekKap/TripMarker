@@ -17,7 +17,8 @@
         <EditText style="@style/input"
             android:id="@+id/location_name"
             android:hint="@string/title_location"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:textColorHint="#000000"/>
 
         <EditText style="@style/input"
             android:inputType="textMultiLine"
@@ -26,7 +27,8 @@
             android:hint="@string/title_description"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/location_name"/>
+            android:layout_below="@+id/location_name"
+            android:textColorHint="#000000"/>
 
         <Button style="@style/layout_wrap_content"
             android:background="@drawable/add_loc_button_states"

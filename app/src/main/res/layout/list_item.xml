@@ -1,12 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-
-
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="24dp"
@@ -17,28 +12,20 @@
         app:backgroundTint="@color/addbuttcol"
         app:elevation="0dp"
         app:borderWidth="2dp"
+        android:layout_marginRight="16dp"
         android:tint="@android:color/white"
         android:background="@drawable/oval"
-        android:layout_marginRight="46dp"
-        android:layout_marginEnd="46dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
-
-    </android.support.design.widget.FloatingActionButton>
-
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Add new place"
         android:id="@+id/textViewtolist"
         android:layout_alignBottom="@+id/imageButtonlistitem"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-
-
 
 </RelativeLayout>
