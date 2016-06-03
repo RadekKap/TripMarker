@@ -1,0 +1,13 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/loadingPanel"
+    android:gravity="center"
+    style="@style/background_transparent"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:clickable="true">
+
+    <ProgressBar
+        style="@style/layout_wrap_content"
+        android:indeterminate="true"
+        android:visibility="visible"/>
+</RelativeLayout>

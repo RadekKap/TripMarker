@@ -2,6 +2,7 @@ package jawas.tripmarker.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,12 +13,15 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import jawas.tripmarker.fragments.LoadingFragment;
 import jawas.tripmarker.helpers.FirebaseRef;
 import jawas.tripmarker.helpers.UserId;
 import jawas.tripmarker.profile.ProfileActivity;
 import jawas.tripmarker.R;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private static final String FRAGMENT_TAG = "loadingFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         EditText password = (EditText) findViewById(R.id.password);
 
         if(!password.getText().toString().isEmpty() || !email.getText().toString().isEmpty() ) {
+            LoadingFragment loadingFragment = LoadingFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().add(R.id.container, loadingFragment, FRAGMENT_TAG).commit();
 
              FirebaseRef.getDbContext().authWithPassword(email.getText().toString(),
                      password.getText().toString(), new Firebase.AuthResultHandler() {
@@ -52,8 +58,11 @@ public class LoginActivity extends AppCompatActivity {
 
                          @Override
                          public void onAuthenticationError(FirebaseError firebaseError) {
-                             String error = firebaseError.toString();
 
+                             Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+                             if(fragment != null)
+                                 getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                             String error = firebaseError.toString();
                              if (error.length() != 164)
                                  Toast.makeText(getApplicationContext(), error.substring(15), Toast.LENGTH_LONG).show();
                              else
