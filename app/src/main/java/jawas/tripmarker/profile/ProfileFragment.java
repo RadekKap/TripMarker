@@ -19,6 +19,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Map;
 
 import jawas.tripmarker.R;
@@ -125,16 +127,19 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 ((TextView) getActivity().findViewById(R.id.name)).append(" " + snapshot.child("name").getValue());
-                ((TextView) getActivity().findViewById(R.id.age)).append(" "+snapshot.child("age").getValue());
+                ((TextView) getActivity().findViewById(R.id.age)).append(" " + snapshot.child("age").getValue());
                 ((TextView) getActivity().findViewById(R.id.gender)).append(" "+snapshot.child("gender").getValue());
-                ((TextView) getActivity().findViewById(R.id.homeplace)).append(" "+snapshot.child("homeplace").getValue());
+                ((TextView) getActivity().findViewById(R.id.homeplace)).append(" " + snapshot.child("homeplace").getValue());
 
                 int gender = snapshot.child("gender").getValue() == "male" ? AdRequest.GENDER_MALE : AdRequest.GENDER_FEMALE;
+                int age = Integer.parseInt(snapshot.child("age").getValue().toString());
+                int year = Calendar.getInstance().get(Calendar.YEAR) - age;
+                GregorianCalendar date = new GregorianCalendar(year,1,1);
 
                 AdView banner = (AdView) getActivity().findViewById(R.id.profileBanner);
-                AdRequest request = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                        .addTestDevice("0D5BB761E332D5A158D5C5AABBB949A2")
-                        .setGender(gender).build();
+                AdRequest request = new AdRequest.Builder()
+                        //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR).addTestDevice("0D5BB761E332D5A158D5C5AABBB949A2")
+                        .setBirthday(date.getTime()).setGender(gender).build();
                 banner.loadAd(request);
             }
 

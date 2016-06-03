@@ -41,4 +41,11 @@
         <item>male</item>
         <item>female</item>
     </string-array>
+
+    <!--Targeting keywords values-->
+    <string-array name="ad_keywords">
+        <item>restaurant</item>
+        <item>hotel</item>
+        <item>travel</item>
+    </string-array>
 </resources>

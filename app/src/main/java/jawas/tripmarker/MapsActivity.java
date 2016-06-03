@@ -36,6 +36,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import jawas.tripmarker.fragments.AddLocationFragment;
+import jawas.tripmarker.helpers.AdBuilder;
 import jawas.tripmarker.helpers.FirebaseRef;
 import jawas.tripmarker.helpers.UserId;
 import jawas.tripmarker.listeners.OnQueyReceiveListener;
@@ -149,7 +150,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {}
+            public void onCancelled(FirebaseError firebaseError) {
+            }
         });
     }
 
@@ -214,10 +216,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 lng = location.getLongitude();
 
                 AdView banner = (AdView) findViewById(R.id.mapBanner);
-                AdRequest request = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                        .addTestDevice("0D5BB761E332D5A158D5C5AABBB949A2")
-                        .setLocation(location).build();
-                banner.loadAd(request);
+                AdRequest.Builder request = new AdRequest.Builder();
+                        //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR).addTestDevice("0D5BB761E332D5A158D5C5AABBB949A2");
+                request = AdBuilder.addTargetProperties(request, location, null, null);
+                String[] tmp = this.getResources().getStringArray(R.array.ad_keywords);
+                request = AdBuilder.addKeywords(request, tmp);
+                banner.loadAd(request.build());
             }
         }
     }
